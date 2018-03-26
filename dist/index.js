@@ -551,18 +551,20 @@
                             if (document.activeElement && document.activeElement.blur(), reset && (this.setInitialSize(), 
                             this.shift.left = 0, this.shift.top = 0), scrollable) {
                                 var bodyDataSet = document.body.dataset, currentBlockScrollCount = parseInt(bodyDataSet.vModalBlockScrollCounter, 10) || 0;
-                                if (bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount + 1, currentBlockScrollCount > 0) return;
-                                bodyDataSet.vModalBlockScrollRightPadding = document.body.style.paddingRight;
-                                var scrollBarWidth = window.innerWidth - document.body.scrollWidth;
-                                document.body.style.paddingRight = scrollBarWidth + "px", document.getElementsByTagName("html")[0].classList.add("v--modal-block-scroll"), 
-                                document.body.classList.add("v--modal-block-scroll");
+                                if (currentBlockScrollCount < 1) {
+                                    bodyDataSet.vModalBlockScrollRightPadding = document.body.style.paddingRight;
+                                    var scrollBarWidth = window.innerWidth - document.body.scrollWidth;
+                                    document.body.style.paddingRight = scrollBarWidth + "px", document.getElementsByTagName("html")[0].classList.add("v--modal-block-scroll"), 
+                                    document.body.classList.add("v--modal-block-scroll");
+                                }
+                                bodyDataSet.vModalBlockScrollCounter = currentBlockScrollCount + 1;
                             }
                         } else if (scrollable) {
                             var _bodyDataSet = document.body.dataset, _currentBlockScrollCount = parseInt(_bodyDataSet.vModalBlockScrollCounter, 10) || 0;
-                            if (_bodyDataSet.vModalBlockScrollCounter = _currentBlockScrollCount - 1, _currentBlockScrollCount > 0) return;
-                            document.body.style.paddingRight = document.body.dataset.vModalBlockScrollRightPadding || "", 
-                            delete document.body.dataset.vModalBlockScrollRightPadding, document.getElementsByTagName("html")[0].classList.remove("v--modal-block-scroll"), 
-                            document.body.classList.remove("v--modal-block-scroll");
+                            _currentBlockScrollCount <= 1 ? (document.body.style.paddingRight = document.body.dataset.vModalBlockScrollRightPadding || "", 
+                            delete _bodyDataSet.vModalBlockScrollRightPadding, delete _bodyDataSet.vModalBlockScrollCounter, 
+                            document.getElementsByTagName("html")[0].classList.remove("v--modal-block-scroll"), 
+                            document.body.classList.remove("v--modal-block-scroll")) : _bodyDataSet.vModalBlockScrollCounter = _currentBlockScrollCount - 1;
                         }
                         var stopEventExecution = !1, stop = function() {
                             stopEventExecution = !0;
